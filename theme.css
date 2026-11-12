@@ -439,61 +439,15 @@ body:is(.theme-dark, .theme-light) .checkbox-container.is-enabled {
   box-shadow: 0 0 12px hsl(var(--accent-h) var(--accent-s) 50% / 0.35);
 }
 
-/* ---------- Plugin overlays in the note's top-right corner ----------
-   Self-hosted LiveSync draws its sync status over the editor (.livesync-status,
-   a full-width transparent box, right-aligned text) and Strange New Worlds puts the
-   note's reference count there too (.snw-header-count-wrapper, a dotted box at a
-   fixed offset). Left alone they overlap. Both become small glass pills on one row
-   under the view header: the reference count in the corner, the sync status to its
-   left. Only their look and place change; neither plugin's settings are touched. */
+/* ---------- Strange New Worlds: the note's reference count as a glass pill ----------
+   Self-hosted LiveSync's in-editor status is left to the plugin: it draws a faint,
+   click-through overlay, and its status-bar item already sits in the status-bar
+   pill. Turning the overlay into an opaque pill covered view controls (the graph
+   view's buttons), so the theme does not restyle it. */
 
 body:is(.theme-dark, .theme-light) {
   --glass-pill-height: 24px;
   --glass-pill-top: 6px;
-}
-
-body:is(.theme-dark, .theme-light) .workspace-leaf-content .livesync-status {
-  left: auto;
-  right: 12px;
-  width: auto;
-  max-width: calc(100% - 24px);
-  padding: 0;
-  margin-top: var(--glass-pill-top);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 6px;
-}
-body:is(.theme-dark, .theme-light) .workspace-leaf-content:has(.snw-header-count-wrapper) .livesync-status {
-  right: 52px;
-  max-width: calc(100% - 64px);
-}
-body:is(.theme-dark, .theme-light) .livesync-status .livesync-status-statusline {
-  box-sizing: border-box;
-  height: var(--glass-pill-height);
-  display: inline-flex;
-  align-items: center;
-  padding: 0 10px;
-  border-radius: 999px;
-  border: 1px solid var(--glass-edge);
-  background: var(--glass-pill);
-  backdrop-filter: blur(10px);
-  color: var(--text-muted);
-  font-size: var(--font-ui-smaller);
-  line-height: 1;
-  opacity: 1;
-  filter: none;
-}
-body:is(.theme-dark, .theme-light) .livesync-status .livesync-status-statusline .livesync-stat-item {
-  filter: grayscale(100%);
-  opacity: 0.85;
-}
-body:is(.theme-dark, .theme-light) .livesync-status div.livesync-status-messagearea:not(:empty) {
-  border-radius: var(--radius-m);
-  padding: 4px 10px;
-  font-size: var(--font-ui-smaller);
-  color: var(--text-normal);
-  backdrop-filter: blur(10px);
 }
 
 body:is(.theme-dark, .theme-light) .snw-header-count-wrapper {

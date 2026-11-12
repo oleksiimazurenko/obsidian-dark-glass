@@ -13,7 +13,7 @@ A calm glass theme for [Obsidian](https://obsidian.md), dark and light: the work
 - **Settings window.** Obsidian 1.15 opens Settings in its own window; it gets the same backdrop, glass navigation and setting cards.
 - **Quiet inline fields.** Properties, rename fields and the inline title have no boxes until you hover or focus them.
 - **Montserrat** for text and interface, embedded in the theme, and the system monospace font for code.
-- **Plugin touches.** The Self-hosted LiveSync status and the Strange New Worlds counter become small pills that do not overlap.
+- **Plugin touches.** The Strange New Worlds reference count becomes a small glass pill. Self-hosted LiveSync's status-bar item sits in the status-bar pill; its optional in-editor status is left as the plugin draws it.
 
 ![The command palette in frosted glass](screenshots/command-palette.png)
 
