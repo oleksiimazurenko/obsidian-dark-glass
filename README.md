@@ -1,13 +1,13 @@
 # Dark Glass
 
-A calm dark theme for [Obsidian](https://obsidian.md): the workspace becomes floating glass cards over an even graphite backdrop, with one warm amber accent.
+A calm glass theme for [Obsidian](https://obsidian.md), dark and light: the workspace becomes floating glass cards over an even, colourless backdrop, with one warm amber accent.
 
 ![Dark Glass: a note with the file explorer and outline](screenshots/workspace.png)
 
 ## What it does
 
 - **Glass cards.** The note area and both side docks are rounded, translucent cards with a thin light edge, one gap and one radius everywhere.
-- **Graphite backdrop.** An even, colourless gradient behind everything. No coloured glows.
+- **Even backdrop.** Graphite in dark mode, pale paper grey in light mode: one colourless gradient behind everything, no coloured glows.
 - **Pill tabs.** Tabs are free-standing pills with a gap above the note, never glued to the pane. Stacked tabs stay readable.
 - **Frosted layers.** Menus, the command palette, modals, suggestions, hover previews and notices blur what lies beneath them (desktop only).
 - **Settings window.** Obsidian 1.15 opens Settings in its own window; it gets the same backdrop, glass navigation and setting cards.
@@ -19,13 +19,17 @@ A calm dark theme for [Obsidian](https://obsidian.md): the workspace becomes flo
 
 ## Modes
 
-Dark mode only. In light mode Obsidian's default look is used.
+Both. Dark mode is smoked glass over graphite; light mode is white glass over pale grey, with softer shadows and a darker amber for links so they read on white. Obsidian switches between them with **Settings → Appearance → Base color scheme**.
+
+![Light mode: the same note in white glass](screenshots/light-workspace.png)
+
+![Light mode: the command palette in frosted white glass](screenshots/light-command-palette.png)
 
 On mobile the same palette is drawn with flat fills and no cards or blur, so a phone does not pay for backdrop filters.
 
 ## Install
 
-From Obsidian, once the theme is listed in the community directory: **Settings → Appearance → Themes → Manage**, search for **Dark Glass**, then **Install and use**.
+From Obsidian: **Settings → Appearance → Themes → Manage**, search for **Dark Glass**, then **Install and use**.
 
 By hand: download `manifest.json` and `theme.css` from the [latest release](https://github.com/oleksiimazurenko/obsidian-dark-glass/releases/latest) into `<your vault>/.obsidian/themes/Dark Glass/`, then pick **Dark Glass** in **Settings → Appearance → Themes**.
 
@@ -39,8 +43,10 @@ body {
   --accent-s: 85%;
   --accent-l: 64%;
   --glass-see-through: 0.62; /* 0 = solid cards, 1 = clear */
-  --glass-graphite-top: 30 31 34;    /* backdrop gradient, rgb */
+  --glass-graphite-top: 30 31 34;    /* dark backdrop gradient, rgb */
   --glass-graphite-bottom: 17 18 20;
+  --glass-paper-top: 243 243 245;    /* light backdrop gradient, rgb */
+  --glass-paper-bottom: 224 225 229;
   --glass-blur: 24px;        /* blur under floating layers */
   --glass-gap: 8px;          /* gap between cards */
   --glass-radius: 14px;      /* card corners */

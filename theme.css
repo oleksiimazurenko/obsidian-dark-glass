@@ -1,11 +1,12 @@
-/* Dark Glass — a dark, translucent "glass" theme for Obsidian.
+/* Dark Glass — a calm translucent "glass" theme for Obsidian, dark and light.
 
-   The window is an even graphite backdrop, colourless: one soft top-to-bottom
-   gradient of grey, no coloured lights.
+   The window is an even, colourless backdrop: graphite in dark mode, pale paper
+   grey in light mode, one soft top-to-bottom gradient, no coloured lights.
    The note area and the side docks are floating glass cards over it: tinted,
-   rounded, with a thin light edge. Floating layers (menus, command palette,
-   modals, popovers, suggestions, notices) blur what lies under them.
+   rounded, with a thin edge. Floating layers (menus, command palette, modals,
+   popovers, suggestions, notices) blur what lies under them.
 
+   Every rule is shared by both modes; only the two palettes below differ.
    Blur is desktop-only. On mobile the same palette is drawn with flat fills and
    no card layout, so a phone never pays for backdrop filters.
 
@@ -18,11 +19,13 @@ body {
   --accent-l: 64%;
 
   /* Glass: how much of the backdrop shows through (0 = solid, 1 = clear),
-     the graphite backdrop (top and bottom of its even gradient), and the blur
-     under floating layers. */
+     the backdrop of each mode (top and bottom of its even gradient, rgb), and
+     the blur under floating layers. */
   --glass-see-through: 0.62;
   --glass-graphite-top: 30 31 34;
   --glass-graphite-bottom: 17 18 20;
+  --glass-paper-top: 243 243 245;
+  --glass-paper-bottom: 224 225 229;
   --glass-blur: 24px;
 
   /* Card layout: gap between the floating cards and their corner radius. */
@@ -35,24 +38,97 @@ body {
   --font-monospace-theme: "SF Mono", SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, monospace;
 }
 
-/* ---------- palette (dark only; light mode keeps Obsidian's default) ---------- */
+/* ---------- palettes ----------
+   --glass-tint is the colour of hover fills and edges (light on dark, dark on
+   light); --glass-shine is the highlight on a card's top edge (white in both). */
 
 .theme-dark {
+  --glass-backdrop-top: var(--glass-graphite-top);
+  --glass-backdrop-bottom: var(--glass-graphite-bottom);
   --glass-base: 20 21 23; /* rgb of the graphite behind everything */
   --glass-tint: 255 255 255;
+  --glass-shine: 255 255 255;
 
   --glass-card: rgb(24 25 28 / calc(1 - var(--glass-see-through) * 0.7));
+  --glass-card-solid: rgb(24 25 28);
   --glass-side: rgb(24 25 28 / calc(1 - var(--glass-see-through)));
   --glass-float: rgb(34 35 39 / calc(1 - var(--glass-see-through) * 0.6));
+  --glass-pill: rgb(32 33 36 / 0.86);
   --glass-edge: rgb(var(--glass-tint) / 0.08);
   --glass-edge-strong: rgb(var(--glass-tint) / 0.14);
-  --glass-sheen: linear-gradient(180deg, rgb(var(--glass-tint) / 0.045), rgb(var(--glass-tint) / 0) 120px);
-  --glass-shadow: 0 12px 40px rgb(0 0 0 / 0.45), inset 0 1px 0 rgb(var(--glass-tint) / 0.07);
+  --glass-sheen: linear-gradient(180deg, rgb(var(--glass-shine) / 0.045), rgb(var(--glass-shine) / 0) 120px);
+  --glass-shadow: 0 12px 40px rgb(0 0 0 / 0.45), inset 0 1px 0 rgb(var(--glass-shine) / 0.07);
+  --glass-card-shadow: inset 0 1px 0 rgb(var(--glass-shine) / 0.06);
+  --glass-side-shadow: none;
+  --glass-drop: rgb(0 0 0 / 0.25);
+  --glass-scrim: rgb(0 0 0 / 0.3);
+  --glass-tab-active: rgb(var(--glass-tint) / 0.08);
+  --glass-tab-active-hover: rgb(var(--glass-tint) / 0.1);
+  --glass-warning-fill: rgb(251 70 76 / 0.14);
+  --glass-warning-text: #ff8a8e;
+  --glass-warning-edge: rgb(251 70 76 / 0.3);
 
   --background-primary: rgb(var(--glass-base));
   --background-primary-alt: rgb(var(--glass-tint) / 0.03);
   --background-secondary: rgb(var(--glass-base));
   --background-secondary-alt: rgb(var(--glass-tint) / 0.05);
+
+  --text-normal: #e8e8ea;
+  --text-muted: #a8a9ad;
+  --text-faint: #707175;
+
+  --tooltip-background: rgb(34 35 39 / 0.94);
+  --setting-items-background: var(--glass-card);
+  --interactive-normal: rgb(var(--glass-tint) / 0.07);
+  --interactive-hover: rgb(var(--glass-tint) / 0.12);
+}
+
+.theme-light {
+  --glass-backdrop-top: var(--glass-paper-top);
+  --glass-backdrop-bottom: var(--glass-paper-bottom);
+  --glass-base: 236 236 239; /* rgb of the paper grey behind everything */
+  --glass-tint: 20 21 24;
+  --glass-shine: 255 255 255;
+
+  --glass-card: rgb(255 255 255 / calc(1 - var(--glass-see-through) * 0.45));
+  --glass-card-solid: rgb(252 252 253);
+  --glass-side: rgb(255 255 255 / calc(1 - var(--glass-see-through) * 0.8));
+  --glass-float: rgb(250 250 251 / calc(1 - var(--glass-see-through) * 0.3));
+  --glass-pill: rgb(255 255 255 / 0.86);
+  --glass-edge: rgb(var(--glass-tint) / 0.08);
+  --glass-edge-strong: rgb(var(--glass-tint) / 0.14);
+  --glass-sheen: linear-gradient(180deg, rgb(var(--glass-shine) / 0.5), rgb(var(--glass-shine) / 0) 120px);
+  --glass-shadow: 0 12px 40px rgb(0 0 0 / 0.14), 0 2px 6px rgb(0 0 0 / 0.05), inset 0 1px 0 rgb(var(--glass-shine) / 0.8);
+  --glass-card-shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 6px 20px rgb(0 0 0 / 0.05), inset 0 1px 0 rgb(var(--glass-shine) / 0.9);
+  --glass-side-shadow: 0 1px 2px rgb(0 0 0 / 0.03), inset 0 1px 0 rgb(var(--glass-shine) / 0.7);
+  --glass-drop: rgb(0 0 0 / 0.08);
+  --glass-scrim: rgb(40 41 45 / 0.12);
+  --glass-tab-active: rgb(255 255 255 / 0.85);
+  --glass-tab-active-hover: rgb(255 255 255 / 0.95);
+  --glass-warning-fill: rgb(220 38 45 / 0.08);
+  --glass-warning-text: #c4262e;
+  --glass-warning-edge: rgb(220 38 45 / 0.25);
+
+  --background-primary: rgb(var(--glass-base));
+  --background-primary-alt: rgb(var(--glass-tint) / 0.025);
+  --background-secondary: rgb(var(--glass-base));
+  --background-secondary-alt: rgb(var(--glass-tint) / 0.04);
+
+  --text-normal: #1d1d20;
+  --text-muted: #5d5e64;
+  --text-faint: #9a9ba1;
+  /* Amber text needs to be darker than the amber fills to read on white. */
+  --text-accent: hsl(var(--accent-h) var(--accent-s) 36%);
+  --text-accent-hover: hsl(var(--accent-h) var(--accent-s) 30%);
+
+  --tooltip-background: rgb(250 250 251 / 0.96);
+  --setting-items-background: var(--glass-card);
+  --interactive-normal: rgb(255 255 255 / 0.7);
+  --interactive-hover: rgb(255 255 255 / 0.95);
+}
+
+/* Shared by both palettes */
+:is(.theme-dark, .theme-light) {
   --background-modifier-border: var(--glass-edge);
   --background-modifier-border-hover: var(--glass-edge-strong);
   --background-modifier-border-focus: hsl(var(--accent-h) var(--accent-s) var(--accent-l) / 0.6);
@@ -61,10 +137,6 @@ body {
   --background-modifier-form-field: rgb(var(--glass-tint) / 0.05);
   --divider-color: transparent;
   --tab-outline-color: transparent;
-
-  --text-normal: #e8e8ea;
-  --text-muted: #a8a9ad;
-  --text-faint: #707175;
 
   --nav-item-background-active: hsl(var(--accent-h) var(--accent-s) var(--accent-l) / 0.14);
   --nav-item-color-active: var(--text-normal);
@@ -77,8 +149,6 @@ body {
   --prompt-background: var(--glass-float);
   --prompt-border-color: var(--glass-edge-strong);
   --suggestion-background: var(--glass-float);
-  --tooltip-background: rgb(34 35 39 / 0.94);
-  --glass-pill: rgb(32 33 36 / 0.86);
   --notice-background: var(--glass-float);
   --code-background: rgb(var(--glass-tint) / 0.04);
   --metadata-background: transparent;
@@ -90,37 +160,37 @@ body {
 /* ---------- the backdrop ----------
    Painted on <body>, so every window gets it: the main window, note pop-outs and the
    Settings window (1.15 opens Settings as its own window, which has no .app-container).
-   An even, colourless graphite gradient over the whole window. */
+   An even, colourless gradient over the whole window. */
 
-body.theme-dark {
-  background: linear-gradient(180deg, rgb(var(--glass-graphite-top)), rgb(var(--glass-graphite-bottom))) fixed;
+body:is(.theme-dark, .theme-light) {
+  background: linear-gradient(180deg, rgb(var(--glass-backdrop-top)), rgb(var(--glass-backdrop-bottom))) fixed;
 }
 
 /* Everything between the backdrop and the cards is clear. */
-body.theme-dark .app-container,
-body.theme-dark .workspace,
-body.theme-dark .workspace-ribbon,
-body.theme-dark .workspace-ribbon::before,
-body.theme-dark .titlebar,
-body.theme-dark .workspace-split,
-body.theme-dark .workspace-tabs,
-body.theme-dark .workspace-tab-header-container,
-body.theme-dark .workspace-tab-container,
-body.theme-dark .workspace-tabs .workspace-leaf,
-body.theme-dark .workspace-leaf-content,
-body.theme-dark .view-header,
-body.theme-dark .view-content,
-body.theme-dark .workspace-split.mod-root .view-content,
-body.theme-dark .markdown-source-view,
-body.theme-dark .markdown-reading-view,
-body.theme-dark .markdown-preview-view,
-body.theme-dark .status-bar,
-body.theme-dark .workspace-sidedock-vault-profile {
+body:is(.theme-dark, .theme-light) .app-container,
+body:is(.theme-dark, .theme-light) .workspace,
+body:is(.theme-dark, .theme-light) .workspace-ribbon,
+body:is(.theme-dark, .theme-light) .workspace-ribbon::before,
+body:is(.theme-dark, .theme-light) .titlebar,
+body:is(.theme-dark, .theme-light) .workspace-split,
+body:is(.theme-dark, .theme-light) .workspace-tabs,
+body:is(.theme-dark, .theme-light) .workspace-tab-header-container,
+body:is(.theme-dark, .theme-light) .workspace-tab-container,
+body:is(.theme-dark, .theme-light) .workspace-tabs .workspace-leaf,
+body:is(.theme-dark, .theme-light) .workspace-leaf-content,
+body:is(.theme-dark, .theme-light) .view-header,
+body:is(.theme-dark, .theme-light) .view-content,
+body:is(.theme-dark, .theme-light) .workspace-split.mod-root .view-content,
+body:is(.theme-dark, .theme-light) .markdown-source-view,
+body:is(.theme-dark, .theme-light) .markdown-reading-view,
+body:is(.theme-dark, .theme-light) .markdown-preview-view,
+body:is(.theme-dark, .theme-light) .status-bar,
+body:is(.theme-dark, .theme-light) .workspace-sidedock-vault-profile {
   background-color: transparent;
 }
 /* The ribbon's top cell (where macOS puts the window buttons) paints its own
    background in 1.15: clear it, or a dark block shows over the backdrop. */
-body.theme-dark .workspace-ribbon::before {
+body:is(.theme-dark, .theme-light) .workspace-ribbon::before {
   background: transparent;
   border: 0;
 }
@@ -130,35 +200,36 @@ body.theme-dark .workspace-ribbon::before {
    window edge, and its width comes from the column (never 100% + margins). */
 
 /* Note area: one card per tab group, under its tab bar */
-body.theme-dark .workspace-split.mod-root .workspace-tab-container {
+body:is(.theme-dark, .theme-light) .workspace-split.mod-root .workspace-tab-container {
   margin: 0 var(--glass-gap) var(--glass-gap) 0;
   border-radius: var(--glass-radius);
   border: 1px solid var(--glass-edge);
   background: var(--glass-sheen), var(--glass-card);
-  box-shadow: inset 0 1px 0 rgb(var(--glass-tint) / 0.06);
+  box-shadow: var(--glass-card-shadow);
   overflow: hidden;
 }
 
 /* Side docks: lighter glass cards */
-body.theme-dark .workspace-split.mod-left-split .workspace-tab-container,
-body.theme-dark .workspace-split.mod-right-split .workspace-tab-container {
+body:is(.theme-dark, .theme-light) .workspace-split.mod-left-split .workspace-tab-container,
+body:is(.theme-dark, .theme-light) .workspace-split.mod-right-split .workspace-tab-container {
   margin: 0 var(--glass-gap) var(--glass-gap);
   border-radius: var(--glass-radius);
   border: 1px solid var(--glass-edge);
   background: var(--glass-sheen), var(--glass-side);
+  box-shadow: var(--glass-side-shadow);
   overflow: hidden;
 }
 
 /* Lists in a side card scroll under a soft fade instead of being cut by the
    card's rounded corner. */
-body.theme-dark .mod-left-split .workspace-leaf-content > .view-content,
-body.theme-dark .mod-right-split .workspace-leaf-content > .view-content {
+body:is(.theme-dark, .theme-light) .mod-left-split .workspace-leaf-content > .view-content,
+body:is(.theme-dark, .theme-light) .mod-right-split .workspace-leaf-content > .view-content {
   -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - 18px), transparent);
   mask-image: linear-gradient(180deg, #000 calc(100% - 18px), transparent);
 }
 
 /* Vault switcher: its own card in the same column as the file tree */
-body.theme-dark .workspace-split.mod-left-split .workspace-sidedock-vault-profile {
+body:is(.theme-dark, .theme-light) .workspace-split.mod-left-split .workspace-sidedock-vault-profile {
   box-sizing: border-box;
   width: auto;
   max-width: calc(100% - 2 * var(--glass-gap));
@@ -172,46 +243,46 @@ body.theme-dark .workspace-split.mod-left-split .workspace-sidedock-vault-profil
    to the pane. The fill sits on the tab's inner pill (the same shape the hover
    uses), never on the header, whose bottom padding is the gap. Only the tab
    bar is touched: stacked tabs keep their own spines. */
-body.theme-dark:not(.is-mobile) .workspace-tab-header-container {
+body:is(.theme-dark, .theme-light):not(.is-mobile) .workspace-tab-header-container {
   height: calc(var(--header-height) + 4px);
 }
-body.theme-dark:not(.is-mobile) .workspace-tab-header-container .workspace-tab-header {
+body:is(.theme-dark, .theme-light):not(.is-mobile) .workspace-tab-header-container .workspace-tab-header {
   padding-bottom: var(--glass-gap);
 }
-body.theme-dark .workspace-tab-header-container .workspace-tab-header,
-body.theme-dark .workspace-tab-header-container .workspace-tab-header.is-active {
+body:is(.theme-dark, .theme-light) .workspace-tab-header-container .workspace-tab-header,
+body:is(.theme-dark, .theme-light) .workspace-tab-header-container .workspace-tab-header.is-active {
   --tab-background-active: transparent;
   background: transparent;
   box-shadow: none;
   border-radius: 0;
 }
-body.theme-dark .workspace-tab-header-container .workspace-tab-header-inner {
+body:is(.theme-dark, .theme-light) .workspace-tab-header-container .workspace-tab-header-inner {
   border-radius: var(--radius-m);
 }
-body.theme-dark .workspace-tab-header-container .workspace-tab-header.is-active .workspace-tab-header-inner {
-  background-color: rgb(var(--glass-tint) / 0.08);
-  box-shadow: inset 0 0 0 1px var(--glass-edge), inset 0 1px 0 rgb(var(--glass-tint) / 0.06);
+body:is(.theme-dark, .theme-light) .workspace-tab-header-container .workspace-tab-header.is-active .workspace-tab-header-inner {
+  background-color: var(--glass-tab-active);
+  box-shadow: inset 0 0 0 1px var(--glass-edge), inset 0 1px 0 rgb(var(--glass-shine) / 0.06);
 }
-body.theme-dark .workspace-tab-header-container .workspace-tab-header.is-active:hover .workspace-tab-header-inner {
-  background-color: rgb(var(--glass-tint) / 0.1);
+body:is(.theme-dark, .theme-light) .workspace-tab-header-container .workspace-tab-header.is-active:hover .workspace-tab-header-inner {
+  background-color: var(--glass-tab-active-hover);
 }
-body.theme-dark .workspace-tab-header.is-active::before,
-body.theme-dark .workspace-tab-header.is-active::after {
+body:is(.theme-dark, .theme-light) .workspace-tab-header.is-active::before,
+body:is(.theme-dark, .theme-light) .workspace-tab-header.is-active::after {
   display: none;
 }
 
 /* Stacked tabs: the leaves slide over each other, so each one is opaque
    (the card's glass laid over the night colour) with a thin edge on its left. */
-body.theme-dark .workspace-tabs.mod-stacked .workspace-tab-container .workspace-leaf {
+body:is(.theme-dark, .theme-light) .workspace-tabs.mod-stacked .workspace-tab-container .workspace-leaf {
   background: linear-gradient(var(--glass-card), var(--glass-card)), rgb(var(--glass-base));
-  box-shadow: -1px 0 0 var(--glass-edge), -8px 0 16px rgb(0 0 0 / 0.25);
+  box-shadow: -1px 0 0 var(--glass-edge), -8px 0 16px var(--glass-drop);
 }
-body.theme-dark .workspace-tabs.mod-stacked .workspace-tab-container .workspace-tab-header {
+body:is(.theme-dark, .theme-light) .workspace-tabs.mod-stacked .workspace-tab-container .workspace-tab-header {
   border-radius: 0;
 }
 
 /* Status bar: a small glass pill floating inside the note card's corner */
-body.theme-dark:not(.is-mobile) .status-bar {
+body:is(.theme-dark, .theme-light):not(.is-mobile) .status-bar {
   bottom: calc(var(--glass-gap) + 6px);
   right: calc(var(--glass-gap) + 6px);
   max-width: calc(100% - 2 * (var(--glass-gap) + 6px));
@@ -222,96 +293,93 @@ body.theme-dark:not(.is-mobile) .status-bar {
 }
 
 /* Floating layers: sheen + lifted shadow */
-body.theme-dark .menu,
-body.theme-dark .prompt,
-body.theme-dark .modal,
-body.theme-dark .suggestion-container,
-body.theme-dark .popover.hover-popover,
-body.theme-dark .notice {
+body:is(.theme-dark, .theme-light) .menu,
+body:is(.theme-dark, .theme-light) .prompt,
+body:is(.theme-dark, .theme-light) .modal,
+body:is(.theme-dark, .theme-light) .suggestion-container,
+body:is(.theme-dark, .theme-light) .popover.hover-popover,
+body:is(.theme-dark, .theme-light) .notice {
   background-image: var(--glass-sheen);
   box-shadow: var(--glass-shadow);
 }
 
 /* ---------- Settings (a window of its own in 1.15, a modal before) ---------- */
 
-body.theme-dark {
+body:is(.theme-dark, .theme-light) {
   --modal-sidebar-background: var(--glass-side);
-  --setting-items-background: rgb(24 25 28 / calc(1 - var(--glass-see-through) * 0.7));
   --setting-items-border-color: var(--glass-edge);
   --setting-items-border-width: 1px;
   --setting-items-divider-color: var(--glass-edge);
   --settings-background: transparent;
-  --interactive-normal: rgb(var(--glass-tint) / 0.07);
-  --interactive-hover: rgb(var(--glass-tint) / 0.12);
   --text-on-accent: #1b1206;
 }
 
 /* The Settings window is the modal: let the window's backdrop show, no extra blur. */
-body.theme-dark.is-popout-modal .modal.mod-settings {
+body:is(.theme-dark, .theme-light).is-popout-modal .modal.mod-settings {
   background: transparent;
   box-shadow: none;
   backdrop-filter: none;
 }
-body.theme-dark .modal.mod-settings .vertical-tab-content,
-body.theme-dark .modal.mod-settings .vertical-tab-content-container {
+body:is(.theme-dark, .theme-light) .modal.mod-settings .vertical-tab-content,
+body:is(.theme-dark, .theme-light) .modal.mod-settings .vertical-tab-content-container {
   background: transparent;
 }
-body.theme-dark .modal.mod-settings .vertical-tab-header {
+body:is(.theme-dark, .theme-light) .modal.mod-settings .vertical-tab-header {
   background: var(--glass-sheen), var(--glass-side);
   border-right: 1px solid var(--glass-edge);
 }
-body.theme-dark .vertical-tab-nav-item.is-active {
+body:is(.theme-dark, .theme-light) .vertical-tab-nav-item.is-active {
   background: hsl(var(--accent-h) var(--accent-s) var(--accent-l) / 0.16);
   color: var(--text-normal);
 }
-body.theme-dark .vertical-tab-nav-item.is-active .vertical-tab-nav-item-icon {
+body:is(.theme-dark, .theme-light) .vertical-tab-nav-item.is-active .vertical-tab-nav-item-icon {
   color: var(--text-accent);
 }
-body.theme-dark .setting-items {
+body:is(.theme-dark, .theme-light) .setting-items {
   background: var(--glass-sheen), var(--setting-items-background);
   border: 1px solid var(--glass-edge);
-  box-shadow: inset 0 1px 0 rgb(var(--glass-tint) / 0.05);
+  box-shadow: inset 0 1px 0 rgb(var(--glass-shine) / 0.05);
 }
 
 /* Controls: glass buttons with an edge, amber call-to-action, soft fields */
-body.theme-dark button:not(.clickable-icon):not(.mod-cta):not(.mod-warning) {
+body:is(.theme-dark, .theme-light) button:not(.clickable-icon):not(.mod-cta):not(.mod-warning) {
   background: var(--interactive-normal);
   border: 1px solid var(--glass-edge);
   box-shadow: none;
 }
-body.theme-dark button:not(.clickable-icon):not(.mod-cta):not(.mod-warning):hover {
+body:is(.theme-dark, .theme-light) button:not(.clickable-icon):not(.mod-cta):not(.mod-warning):hover {
   background: var(--interactive-hover);
   border-color: var(--glass-edge-strong);
 }
-body.theme-dark button.mod-cta {
+body:is(.theme-dark, .theme-light) button.mod-cta {
   color: var(--text-on-accent);
   box-shadow: 0 4px 18px hsl(var(--accent-h) var(--accent-s) 50% / 0.25);
 }
-body.theme-dark button.mod-warning {
-  background: rgb(251 70 76 / 0.14);
-  color: #ff8a8e;
-  border: 1px solid rgb(251 70 76 / 0.3);
+body:is(.theme-dark, .theme-light) button.mod-warning {
+  background: var(--glass-warning-fill);
+  color: var(--glass-warning-text);
+  border: 1px solid var(--glass-warning-edge);
   box-shadow: none;
 }
 /* Form fields get a glass box only where Obsidian draws a form: Settings, modals,
    the command palette, menus and search boxes. Inputs Obsidian renders inline in a
    note or a list (property keys and values, titles, rename fields, the date picker)
    stay borderless; see "Inline fields" below. */
-body.theme-dark :is(.modal, .prompt, .menu, .setting-item-control, .search-input-container, .document-search-container) :is(input[type="text"], input[type="search"], input[type="number"], input[type="email"], input[type="password"], input[type="date"], input[type="datetime-local"], textarea),
-body.theme-dark select.dropdown {
+body:is(.theme-dark, .theme-light) :is(.modal, .prompt, .menu, .setting-item-control, .search-input-container, .document-search-container) :is(input[type="text"], input[type="search"], input[type="number"], input[type="email"], input[type="password"], input[type="date"], input[type="datetime-local"], textarea),
+body:is(.theme-dark, .theme-light) select.dropdown {
   background-color: var(--background-modifier-form-field);
   border: 1px solid var(--glass-edge);
   box-shadow: none;
 }
-body.theme-dark :is(.modal, .prompt, .menu, .setting-item-control, .search-input-container, .document-search-container) :is(input, textarea):focus,
-body.theme-dark select.dropdown:focus {
+body:is(.theme-dark, .theme-light) :is(.modal, .prompt, .menu, .setting-item-control, .search-input-container, .document-search-container) :is(input, textarea):focus,
+body:is(.theme-dark, .theme-light) select.dropdown:focus {
   border-color: hsl(var(--accent-h) var(--accent-s) var(--accent-l) / 0.6);
   box-shadow: 0 0 0 3px hsl(var(--accent-h) var(--accent-s) var(--accent-l) / 0.15);
 }
 
 /* ---------- Inline fields: no box at rest, a soft rounded highlight on hover/focus ---------- */
 
-body.theme-dark {
+body:is(.theme-dark, .theme-light) {
   --metadata-property-radius: var(--radius-m);
   --metadata-property-radius-hover: var(--radius-m);
   --metadata-property-radius-focus: var(--radius-m);
@@ -335,38 +403,38 @@ body.theme-dark {
   --embed-border-radius: var(--radius-m);
   --table-selection-border-radius: var(--radius-s);
 }
-body.theme-dark .metadata-property input,
-body.theme-dark .metadata-property-key-input,
-body.theme-dark .metadata-add-button,
-body.theme-dark .nav-file-title input,
-body.theme-dark .nav-folder-title input,
-body.theme-dark .view-header-title-container input,
-body.theme-dark .inline-title {
+body:is(.theme-dark, .theme-light) .metadata-property input,
+body:is(.theme-dark, .theme-light) .metadata-property-key-input,
+body:is(.theme-dark, .theme-light) .metadata-add-button,
+body:is(.theme-dark, .theme-light) .nav-file-title input,
+body:is(.theme-dark, .theme-light) .nav-folder-title input,
+body:is(.theme-dark, .theme-light) .view-header-title-container input,
+body:is(.theme-dark, .theme-light) .inline-title {
   background: transparent;
   border: 0;
   box-shadow: none;
   border-radius: var(--radius-s);
 }
-body.theme-dark .metadata-property-key,
-body.theme-dark .metadata-property-value {
+body:is(.theme-dark, .theme-light) .metadata-property-key,
+body:is(.theme-dark, .theme-light) .metadata-property-value {
   border-radius: var(--radius-m);
   transition: background-color 0.12s ease;
 }
-body.theme-dark .metadata-property-key:hover,
-body.theme-dark .metadata-property-value:hover {
+body:is(.theme-dark, .theme-light) .metadata-property-key:hover,
+body:is(.theme-dark, .theme-light) .metadata-property-value:hover {
   background-color: rgb(var(--glass-tint) / 0.05);
 }
-body.theme-dark .metadata-property-key:focus-within,
-body.theme-dark .metadata-property-value:focus-within {
+body:is(.theme-dark, .theme-light) .metadata-property-key:focus-within,
+body:is(.theme-dark, .theme-light) .metadata-property-value:focus-within {
   background-color: rgb(var(--glass-tint) / 0.07);
   box-shadow: inset 0 0 0 1px hsl(var(--accent-h) var(--accent-s) var(--accent-l) / 0.35);
 }
 
-body.theme-dark .checkbox-container {
+body:is(.theme-dark, .theme-light) .checkbox-container {
   background-color: rgb(var(--glass-tint) / 0.12);
   box-shadow: inset 0 0 0 1px var(--glass-edge);
 }
-body.theme-dark .checkbox-container.is-enabled {
+body:is(.theme-dark, .theme-light) .checkbox-container.is-enabled {
   background-color: var(--interactive-accent);
   box-shadow: 0 0 12px hsl(var(--accent-h) var(--accent-s) 50% / 0.35);
 }
@@ -379,12 +447,12 @@ body.theme-dark .checkbox-container.is-enabled {
    under the view header: the reference count in the corner, the sync status to its
    left. Only their look and place change; neither plugin's settings are touched. */
 
-body.theme-dark {
+body:is(.theme-dark, .theme-light) {
   --glass-pill-height: 24px;
   --glass-pill-top: 6px;
 }
 
-body.theme-dark .workspace-leaf-content .livesync-status {
+body:is(.theme-dark, .theme-light) .workspace-leaf-content .livesync-status {
   left: auto;
   right: 12px;
   width: auto;
@@ -396,11 +464,11 @@ body.theme-dark .workspace-leaf-content .livesync-status {
   align-items: flex-end;
   gap: 6px;
 }
-body.theme-dark .workspace-leaf-content:has(.snw-header-count-wrapper) .livesync-status {
+body:is(.theme-dark, .theme-light) .workspace-leaf-content:has(.snw-header-count-wrapper) .livesync-status {
   right: 52px;
   max-width: calc(100% - 64px);
 }
-body.theme-dark .livesync-status .livesync-status-statusline {
+body:is(.theme-dark, .theme-light) .livesync-status .livesync-status-statusline {
   box-sizing: border-box;
   height: var(--glass-pill-height);
   display: inline-flex;
@@ -416,11 +484,11 @@ body.theme-dark .livesync-status .livesync-status-statusline {
   opacity: 1;
   filter: none;
 }
-body.theme-dark .livesync-status .livesync-status-statusline .livesync-stat-item {
+body:is(.theme-dark, .theme-light) .livesync-status .livesync-status-statusline .livesync-stat-item {
   filter: grayscale(100%);
   opacity: 0.85;
 }
-body.theme-dark .livesync-status div.livesync-status-messagearea:not(:empty) {
+body:is(.theme-dark, .theme-light) .livesync-status div.livesync-status-messagearea:not(:empty) {
   border-radius: var(--radius-m);
   padding: 4px 10px;
   font-size: var(--font-ui-smaller);
@@ -428,7 +496,7 @@ body.theme-dark .livesync-status div.livesync-status-messagearea:not(:empty) {
   backdrop-filter: blur(10px);
 }
 
-body.theme-dark .snw-header-count-wrapper {
+body:is(.theme-dark, .theme-light) .snw-header-count-wrapper {
   box-sizing: border-box;
   top: calc(var(--header-height) + var(--glass-pill-top));
   right: 12px;
@@ -447,46 +515,46 @@ body.theme-dark .snw-header-count-wrapper {
   font-size: var(--font-ui-smaller);
   line-height: 1;
 }
-body.theme-dark .snw-header-count-wrapper:hover {
+body:is(.theme-dark, .theme-light) .snw-header-count-wrapper:hover {
   border-color: hsl(var(--accent-h) var(--accent-s) var(--accent-l) / 0.5);
   color: var(--text-normal);
 }
 
 /* ---------- desktop only: real blur under floating layers ---------- */
 
-body.theme-dark:not(.is-mobile) {
+body:is(.theme-dark, .theme-light):not(.is-mobile) {
   --menu-backdrop-filter: blur(var(--glass-blur)) saturate(1.5);
   --prompt-backdrop-filter: blur(var(--glass-blur)) saturate(1.5);
   --suggestion-backdrop-filter: blur(var(--glass-blur)) saturate(1.5);
 }
-body.theme-dark:not(.is-mobile):not(.is-popout-modal) .modal,
-body.theme-dark:not(.is-mobile) .popover.hover-popover,
-body.theme-dark:not(.is-mobile) .notice {
+body:is(.theme-dark, .theme-light):not(.is-mobile):not(.is-popout-modal) .modal,
+body:is(.theme-dark, .theme-light):not(.is-mobile) .popover.hover-popover,
+body:is(.theme-dark, .theme-light):not(.is-mobile) .notice {
   backdrop-filter: blur(var(--glass-blur)) saturate(1.5);
 }
-body.theme-dark:not(.is-mobile) .modal-container .modal-bg {
-  background-color: rgb(0 0 0 / 0.3) !important;
+body:is(.theme-dark, .theme-light):not(.is-mobile) .modal-container .modal-bg {
+  background-color: var(--glass-scrim) !important;
   backdrop-filter: blur(3px);
 }
 
 /* ---------- macOS "Translucent window" (Settings → Appearance), windowed only ----------
    Obsidian applies it only outside full screen; then the desktop shows through the backdrop. */
 
-body.theme-dark.is-translucent:not(.is-fullscreen) {
+body:is(.theme-dark, .theme-light).is-translucent:not(.is-fullscreen) {
   background:
     rgb(var(--glass-base) / 0.55);
 }
 
 /* ---------- mobile: same palette, flat fills, no cards, no blur ---------- */
 
-body.is-mobile.theme-dark {
+body.is-mobile:is(.theme-dark, .theme-light) {
   background: rgb(var(--glass-base));
 }
-body.is-mobile.theme-dark .workspace-tab-container {
+body.is-mobile:is(.theme-dark, .theme-light) .workspace-tab-container {
   margin: 0;
   border: 0;
   border-radius: 0;
-  background: rgb(24 25 28);
+  background: var(--glass-card-solid);
   box-shadow: none;
 }
 /* Montserrat (SIL Open Font License), embedded */
