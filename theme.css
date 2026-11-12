@@ -532,8 +532,10 @@ body:is(.theme-dark, .theme-light):not(.is-mobile) .popover.hover-popover,
 body:is(.theme-dark, .theme-light):not(.is-mobile) .notice {
   backdrop-filter: blur(var(--glass-blur)) saturate(1.5);
 }
+body:is(.theme-dark, .theme-light):not(.is-mobile) {
+  --background-modifier-cover: var(--glass-scrim);
+}
 body:is(.theme-dark, .theme-light):not(.is-mobile) .modal-container .modal-bg {
-  background-color: var(--glass-scrim) !important;
   backdrop-filter: blur(3px);
 }
 
